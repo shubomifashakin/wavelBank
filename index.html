@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./css/bank.css" />
+
+    <link href="https://fonts.cdnfonts.com/css/roboto" rel="stylesheet" />
+
+    <script
+      src="https://kit.fontawesome.com/a76d23d87b.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script defer type="module" src="./js/controller.js"></script>
+    <title>Wavel Bank</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="app">
+        <nav class="navbar">
+          <div class="user-info">
+            <span class="user-greeting"
+              >Welcome,
+              <p class="user-name"></p
+            ></span>
+            <p class="user-account-number">
+              <span class="user-account-type"></span>
+            </p>
+          </div>
+          <!--user info-->
+
+          <div class="user-balance">
+            <div class="user-balance-cont">
+              <span class="icon-hide"
+                ><i class="fa-regular fa-eye icon-eye"></i
+              ></span>
+              <p class="user-current-balance"></p>
+            </div>
+            <p class="user-stash">
+              Stash - <span class="user-stash-balance"></span>
+            </p>
+            <!--user current balance-->
+          </div>
+          <!--user balance-->
+        </nav>
+
+        <div class="transfer-success-modal">
+          <p class="transfer-success-message">
+            You just sent <span class="transfer-success-amount"></span> to
+            <span class="transfer-success-receiver"></span>
+          </p>
+        </div>
+
+        <section class="log-in show-interface">
+          <form autocomplete="on" class="log-in-form">
+            <h2 class="log-in-header">Log In</h2>
+
+            <div class="form-row">
+              <label class="log-in-label"
+                ><span class="label-name">Username</span>
+                <span class="log-in-error"
+                  >Incorrect Username or Password</span
+                ></label
+              ><input type="text" class="login-input log-in-username" />
+            </div>
+
+            <div class="form-row">
+              <label class="log-in-label">Password</label
+              ><input type="password" class="login-input log-in-password" />
+            </div>
+
+            <button href="#logIn" class="submit-form-btn log-in-btn">
+              Log In
+            </button>
+          </form>
+        </section>
+
+        <section class="app-inner">
+          <div class="app-sidebar">
+            <span class="app-button"
+              ><a href="#transactions" class="button-link"
+                ><i
+                  class="fa-solid fa-money-bill-transfer transactions side-icon"
+                  data-target-section="transactions-interface"
+                ></i></a
+            ></span>
+
+            <span class="app-button"
+              ><a href="#sendMoney" class="button-link"
+                ><i
+                  class="fa-regular fa-paper-plane send-money-icon side-icon"
+                  data-target-section="send-money-interface"
+                ></i></a
+            ></span>
+
+            <span class="app-button"
+              ><a href="#payBills" class="payBills button-link">
+                <i
+                  class="fa-solid fa-money-bill pay-bills-icon side-icon"
+                  data-target-section="pay-bills-interface"
+                ></i></a
+            ></span>
+
+            <span class="app-button stash"
+              ><a href="#stash" class="payBills button-link"
+                ><i class="fa-solid fa-wallet side-icon"></i></a
+            ></span>
+          </div>
+          <!--app sidebar-->
+
+          <div class="app-main">
+            <div class="app-main-inner">
+              <section class="transactions-interface"></section>
+
+              <section class="form-container send-money-interface">
+                <form>
+                  <div class="form-row">
+                    <label class="form-label">Name Of Bank</label>
+                    <input
+                      type="text"
+                      class="form-input listToggler listOfBanksInput"
+                      data-toggler="bank-list"
+                      disabled
+                    />
+
+                    <span class="dropdown-list bank-list">
+                      <p class="list-element bank">
+                        <span class="list-item bank-name"
+                          >Guaranty Trust Bank</span
+                        >
+                      </p>
+
+                      <p class="list-element bank">
+                        <span class="list-item bank-name"
+                          >United Bank For Africa</span
+                        >
+                      </p>
+
+                      <p class="list-element bank">
+                        <span class="list-item bank-name">Optimus Bank</span>
+                      </p>
+                      <p class="list-element bank">
+                        <span class="list-item bank-name">Fidelity Bank</span>
+                      </p>
+                      <p class="list-element bank">
+                        <span class="list-item bank-name">Ecobank</span>
+                      </p>
+                      <p class="list-element bank">
+                        <span class="list-item bank-name">Wavel</span>
+                      </p>
+                      <p class="list-element bank">
+                        <span class="list-item bank-name">Sterling Bank</span>
+                      </p>
+                      <p class="list-element bank">
+                        <span class="list-item bank-name">Unity Bank</span>
+                      </p>
+                      <p class="list-element bank">
+                        <span class="list-item bank-name">Citi Bank</span>
+                      </p>
+                    </span>
+                  </div>
+
+                  <div class="form-row">
+                    <label class="form-label">Account number</label>
+                    <input
+                      type="number"
+                      class="form-input account-number-input"
+                    />
+                  </div>
+
+                  <div class="form-row amount-to-send">
+                    <label class="form-label">Amount</label>
+                    <input
+                      type="number"
+                      class="form-input amount-to-send-input"
+                    />
+                  </div>
+
+                  <p class="receiver found"></p>
+
+                  <button class="submit-form-btn send-money-btn">
+                    Send Money
+                  </button>
+                </form>
+              </section>
+              <!--send money interface-->
+
+              <section class="form-container pay-bills-interface">
+                <form>
+                  <div class="form-row">
+                    <label class="form-label">Type Of Bill</label>
+                    <input
+                      type="text"
+                      class="form-input listToggler listOfBillsInput"
+                      data-toggler="bills-list"
+                      disabled
+                    />
+
+                    <span class="dropdown-list bills-list">
+                      <p class="list-element bill">
+                        <span class="list-item bill-name"
+                          >Airtime Purchase</span
+                        >
+                      </p>
+
+                      <p class="list-element bill">
+                        <span class="list-item bill-name"
+                          >Internet Services</span
+                        >
+                      </p>
+
+                      <p class="list-element bill">
+                        <span class="list-item bill-name">DSTV payment</span>
+                      </p>
+                    </span>
+                  </div>
+
+                  <span class="pay-bills-menu airtime-purchase-menu">
+                    <div class="form-row airtime-purchase">
+                      <label class="form-label">Service Provider</label>
+                      <input
+                        type="text"
+                        class="form-input listToggler serviceProviderInput"
+                        data-toggler="service-provider-list"
+                        disabled
+                      />
+
+                      <span class="dropdown-list service-provider-list">
+                        <p class="list-element service-provider">
+                          <span class="list-item service-provider-name"
+                            >9Mobile</span
+                          >
+                        </p>
+
+                        <p class="list-element service-provider">
+                          <span class="list-item service-provider-name"
+                            >Airtel</span
+                          >
+                        </p>
+
+                        <p class="list-element service-provider">
+                          <span class="list-item service-provider-name"
+                            >MTN</span
+                          >
+                        </p>
+
+                        <p class="list-element service-provider">
+                          <span class="list-item service-provider-name"
+                            >GLO</span
+                          >
+                        </p>
+                      </span>
+                    </div>
+
+                    <div class="form-row airtime-purchase">
+                      <label class="form-label">Phone Number</label>
+                      <input
+                        type="number"
+                        class="form-input phone-number-input"
+                      />
+                    </div>
+
+                    <div class="form-row airtime-purchase">
+                      <label class="form-label">Amount</label>
+                      <input
+                        type="number"
+                        class="form-input airtime-amount-input"
+                      />
+                    </div>
+                    <!--pay bills menu-->
+                  </span>
+
+                  <span class="pay-bills-menu internet-service-menu">
+                    <div class="form-row internet-services">
+                      <label class="form-label"
+                        >Internet Service Providers</label
+                      >
+                      <input
+                        type="text"
+                        class="form-input listToggler serviceProviderInput"
+                        data-toggler="internet-service-provider-list"
+                        disabled
+                      />
+
+                      <span
+                        class="dropdown-list internet-service-provider-list"
+                      >
+                        <p class="list-element internet-service-provider">
+                          <span class="list-item internet-service-provider-name"
+                            >Smile</span
+                          >
+                        </p>
+
+                        <p class="list-element internet-service-provider">
+                          <span class="list-item internet-service-provider-name"
+                            >Spectranet</span
+                          >
+                        </p>
+
+                        <p class="list-element internet-service-provider">
+                          <span class="list-item internet-service-provider-name"
+                            >Swift</span
+                          >
+                        </p>
+
+                        <p class="list-element internet-service-provider">
+                          <span class="list-item internet-service-provider-name"
+                            >Ntel</span
+                          >
+                        </p>
+                      </span>
+                    </div>
+
+                    <div class="form-row internet-services">
+                      <label class="form-label">Card Number</label>
+                      <input
+                        type="number"
+                        class="form-input card-number-input"
+                      />
+                    </div>
+
+                    <div class="form-row internet-services">
+                      <label class="form-label">Data Plan</label>
+                      <input
+                        type="text"
+                        disabled
+                        class="form-input listToggler airtime-amount-input"
+                        data-toggler="data-plan-list"
+                        disabled
+                      />
+
+                      <span class="dropdown-list data-plan-list">
+                        <p class="list-element data-plan">
+                          <span class="list-item data-plan-name"
+                            >N5000 for 7.5gb</span
+                          >
+                        </p>
+
+                        <p class="list-element service-provider">
+                          <span class="list-item data-plan-name"
+                            >N15000 for 25gb</span
+                          >
+                        </p>
+
+                        <p class="list-element service-provider">
+                          <span class="list-item data-plan-name"
+                            >N20000 for 50gb</span
+                          >
+                        </p>
+
+                        <p class="list-element service-provider">
+                          <span class="list-item data-plan-name"
+                            >25000 for 80gb</span
+                          >
+                        </p>
+                        <!--dropdown list span ending-->
+                      </span>
+                    </div>
+                    <!--internet services menu-->
+                  </span>
+
+                  <span class="pay-bills-menu dstv-menu">
+                    <div class="form-row dstv">
+                      <label class="form-label">Smart Card Number</label>
+                      <input
+                        type="number"
+                        class="form-input smart-card-number-input"
+                      />
+                    </div>
+
+                    <div class="form-row dstv">
+                      <label class="form-label">Subscription Package</label>
+                      <input
+                        type="text"
+                        disabled
+                        class="form-input listToggler subscription-input"
+                        data-toggler="subscription-list"
+                        disabled
+                      />
+
+                      <span class="dropdown-list subscription-list">
+                        <p class="list-element subscription">
+                          <span class="list-item subscription-name"
+                            >Premium</span
+                          >
+                        </p>
+
+                        <p class="list-element subscription">
+                          <span class="list-item subscription-name"
+                            >Compact+</span
+                          >
+                        </p>
+
+                        <p class="list-element service-provider">
+                          <span class="list-item subscription-name"
+                            >Compact</span
+                          >
+                        </p>
+
+                        <p class="list-element service-provider">
+                          <span class="list-item subscription-name">Flex</span>
+                        </p>
+                        <!--dropdown list span ending-->
+                      </span>
+                    </div>
+                    <!--dstv menu-->
+                  </span>
+
+                  <p class="receiver found"></p>
+
+                  <button class="submit-form-btn pay-bills-btn">
+                    Pay Bill
+                  </button>
+                </form>
+              </section>
+            </div>
+            <!--app main inner-->
+          </div>
+        </section>
+        <!--inner app-->
+
+        <section class="confirmation-interface">
+          <div class="confirmation-container">
+            <span class="confirm-receiver"></span>
+
+            <input
+              type="password"
+              class="confirmation-screen"
+              value=""
+              disabled
+            />
+
+            <div class="confirmation-numbers">
+              <div class="confirmation-row">
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="1"
+                >
+                  1
+                </button>
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="2"
+                >
+                  2
+                </button>
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="3"
+                >
+                  3
+                </button>
+              </div>
+              <!--confirmation row-->
+
+              <div class="confirmation-row">
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="4"
+                >
+                  4
+                </button>
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="5"
+                >
+                  5
+                </button>
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="6"
+                >
+                  6
+                </button>
+              </div>
+              <!--confirmation row-->
+
+              <div class="confirmation-row">
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="7"
+                >
+                  7
+                </button>
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="8"
+                >
+                  8
+                </button>
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="9"
+                >
+                  9
+                </button>
+              </div>
+              <!--confirmation row-->
+
+              <div class="confirmation-row">
+                <button
+                  type="button"
+                  class="confirm-button confirm-cancel"
+                  value="cancel"
+                >
+                  cancel
+                </button>
+                <button
+                  type="button"
+                  class="confirm-button confirm-digit"
+                  value="0"
+                >
+                  0
+                </button>
+                <button
+                  type="button"
+                  class="confirm-button confirm-delete"
+                  value="delete"
+                >
+                  <i class="fa-solid fa-delete-left"></i>
+                </button>
+              </div>
+
+              <div class="confirmation-row">
+                <button
+                  class="confirm-send-money-btn submit-form-btn"
+                  type="button"
+                >
+                  Send Money
+                </button>
+              </div>
+              <!--confirmation row-->
+            </div>
+            <!--confirmation numbers-->
+          </div>
+        </section>
+
+        <footer class="app-footer">
+          <a href="#logOut" class="log-out-btn">Log Out</a>
+          <a href="#sort" class="sort"
+            ><i
+              class="fas fa-sort sort-icon sort-all"
+              data-movements="allMovements"
+              data-from="fromMovements"
+              data-timeMov="timeOfTransaction"
+            ></i
+          ></a>
+        </footer>
+      </div>
+      <!--app-->
+    </div>
+  </body>
+</html>
