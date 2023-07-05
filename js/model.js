@@ -219,12 +219,12 @@ export class account {
 }
 
 const ac1 = new account(
-  "545plea",
-  "Olashubomi",
-  "Fashakin",
+  "andre200",
+  "Thomas",
+  "Andre",
   "1234567",
-  "subomifasakin@gmail.com",
-  "5 abiodun fashakin street abiodun street lagos nigeria",
+  "andrethomas@gmail.com",
+  "200 vivian fowler street lagos, nigeria",
   "99448820128",
   "12345678930123",
   "0432310080",
@@ -242,8 +242,8 @@ const ac2 = new account(
   "Fela",
   "Adegoke",
   "1234567",
-  "nelsonstretch34@gmail.com",
-  "5 abiodun fashakin street abiodun street lagos nigeria",
+  "felaAde@icloud.com",
+  "200 vivian fowler street lagos, nigeria",
   "99448820128",
   "12345678930123",
   "2004475543",
@@ -256,12 +256,12 @@ ac2.newDebit(15400, "07/04/2023", "Temi Otedola");
 ac2.newCredit(22300, "02/04/2023", "Kendrick Lamar");
 
 const ac3 = new account(
-  "kfright",
+  "femiote",
   "Femi",
   "Otedola",
   "1234567",
-  "nelsonstretch34@gmail.com",
-  "5 abiodun fashakin street abiodun street lagos nigeria",
+  "otedollars@gmail.com",
+  "200 vivian fowler street lagos, nigeria",
   "99448820128",
   "12345678930123",
   "2122662171",
