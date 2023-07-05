@@ -1,4 +1,4 @@
-import { userView } from "./view";
+import { userView } from "./_view";
 class PayBills {
   payBillsInterface = document.querySelector(".pay-bills-interface");
   listOfBillsInput = document.querySelector(".listOfBillsInput");

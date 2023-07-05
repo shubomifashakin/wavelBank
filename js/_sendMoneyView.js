@@ -1,7 +1,7 @@
-import { userView } from "./view";
-import { everyBank } from "./model";
-import { AppState } from "./model";
-import { confirmationInterface } from "./confirmationModal";
+import { userView } from "./_view";
+import { everyBank } from "./_model";
+import { AppState } from "./_model";
+import { confirmationInterface } from "./_confirmationModal";
 
 class SendMoney {
   //send money interface elements

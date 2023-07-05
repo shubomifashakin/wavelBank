@@ -1,7 +1,7 @@
-import { sendMoney } from "./sendMoneyView";
-import { userView } from "./view";
-import { everyBank } from "./model";
-import { AppState } from "./model";
+import { sendMoney } from "./_sendMoneyView";
+import { userView } from "./_view";
+import { everyBank } from "./_model";
+import { AppState } from "./_model";
 
 class ConfirmationModal {
   confirmationModal = document.querySelector(".confirmation-interface");

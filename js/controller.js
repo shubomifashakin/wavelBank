@@ -1,9 +1,9 @@
-import * as model from "./model.js";
-import { userView } from "./view.js";
-import { payBills } from "./payBills.js";
-import { sendMoney } from "./sendMoneyView.js";
-import { confirmationInterface } from "./confirmationModal.js";
-import { logInOut } from "./logInOut.js";
+import * as model from "./_model.js";
+import { userView } from "./_view.js";
+import { payBills } from "./_payBills.js";
+import { sendMoney } from "./_sendMoneyView.js";
+import { confirmationInterface } from "./_confirmationModal.js";
+import { logInOut } from "./_logInOut.js";
 import "core-js/stable";
 
 class Controller {

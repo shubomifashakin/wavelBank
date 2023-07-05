@@ -28,6 +28,11 @@
   --submit-btn-bg: #243349;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 .container {
   height: 100vh;
   width: 100%;
@@ -98,6 +103,7 @@
 
 .user-balance-cont {
   display: flex;
+  align-items: center;
 }
 
 .icon-eye {
@@ -236,6 +242,7 @@
 .app-inner {
   display: flex;
   flex-basis: 70%;
+  overflow: hidden;
 }
 
 .app-sidebar {
@@ -274,14 +281,13 @@
 
 .app-main {
   flex-basis: 90%;
-
+  height: 100%;
   padding: 1rem 2rem;
   box-sizing: border-box;
 }
 
 .app-main-inner {
-  min-height: 28rem;
-  max-height: 28rem;
+  height: 100%;
   width: 100%;
   background: linear-gradient(
     135deg,
@@ -664,4 +670,58 @@ input[type="number"] {
 
 .log-out-btn:hover {
   color: var(--hover-color);
+}
+
+@media (max-width: 800px) {
+  .log-in {
+    width: 100%;
+    height: 100%;
+  }
+
+  .log-in-form {
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .navbar {
+    width: 100%;
+    padding: 0rem 1rem;
+    align-items: center;
+  }
+
+  .user-balance {
+    justify-content: start;
+  }
+
+  .user-greeting,
+  .user-account-number,
+  .user-name,
+  .user-current-balance,
+  .icon-eye,
+  .user-balance {
+    font-size: 0.85rem;
+  }
+
+  .app-sidebar {
+    flex-basis: 18%;
+  }
+
+  .app-main {
+    flex-basis: 82%;
+    padding: 1rem 1rem;
+  }
+
+  .app-main-inner {
+    min-height: 100%;
+    overflow-y: auto;
+  }
+
+  .transaction {
+    padding: 1rem;
+  }
+
+  .form-container {
+    padding: 2rem 1rem;
+  }
 }

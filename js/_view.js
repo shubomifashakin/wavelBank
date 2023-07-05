@@ -1,4 +1,4 @@
-import { AppState } from "./model";
+import { AppState } from "./_model";
 
 class Views {
   transactionsInterface = document.querySelector(".transactions-interface");
