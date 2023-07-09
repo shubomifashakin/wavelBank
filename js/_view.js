@@ -104,7 +104,6 @@ class Views {
 
   //this renders all users transactions
   showTransactions(e) {
-    console.log(e);
     //removes rendered transactions from the transactions element
     this.transactionsInterface.innerHTML = "";
 
