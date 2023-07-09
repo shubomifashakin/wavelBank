@@ -34,24 +34,17 @@
           <div class="user-balance">
             <div class="user-balance-cont">
               <span class="icon-hide"
-                ><i class="fa-regular fa-eye icon-eye"></i
-              ></span>
+                ><i class="fa-regular fa-eye icon-eye">s</i></span
+              >
               <p class="user-current-balance"></p>
             </div>
             <p class="user-stash">
-              Stash - <span class="user-stash-balance"></span>
+              Stash: <span class="user-stash-balance"></span>
             </p>
             <!--user current balance-->
           </div>
           <!--user balance-->
         </nav>
-
-        <div class="transfer-success-modal">
-          <p class="transfer-success-message">
-            You just sent <span class="transfer-success-amount"></span> to
-            <span class="transfer-success-receiver"></span>
-          </p>
-        </div>
 
         <section class="log-in show-interface">
           <form autocomplete="on" class="log-in-form">
@@ -84,34 +77,52 @@
                 ><i
                   class="fa-solid fa-money-bill-transfer transactions side-icon"
                   data-target-section="transactions-interface"
-                ></i></a
-            ></span>
+                  >s</i
+                ></a
+              ></span
+            >
 
             <span class="app-button"
               ><a href="#sendMoney" class="button-link"
                 ><i
                   class="fa-regular fa-paper-plane send-money-icon side-icon"
                   data-target-section="send-money-interface"
-                ></i></a
-            ></span>
+                  >s</i
+                ></a
+              ></span
+            >
 
             <span class="app-button"
               ><a href="#payBills" class="payBills button-link">
                 <i
                   class="fa-solid fa-money-bill pay-bills-icon side-icon"
                   data-target-section="pay-bills-interface"
-                ></i></a
-            ></span>
+                  >s</i
+                ></a
+              ></span
+            >
 
             <span class="app-button stash"
               ><a href="#stash" class="payBills button-link"
-                ><i class="fa-solid fa-wallet side-icon"></i></a
-            ></span>
+                ><i
+                  class="fa-solid fa-wallet stash-icon side-icon"
+                  data-target-section="stash-interface"
+                  >s</i
+                ></a
+              ></span
+            >
           </div>
           <!--app sidebar-->
 
           <div class="app-main">
             <div class="app-main-inner">
+              <span class="transfer-success-modal">
+                <p class="transfer-success-message">
+                  You just sent <span class="transfer-success-amount"></span> to
+                  <span class="transfer-success-receiver"></span>
+                </p>
+              </span>
+
               <section class="transactions-interface"></section>
 
               <section class="form-container send-money-interface">
@@ -178,6 +189,14 @@
                     />
                   </div>
 
+                  <div class="form-row transaction-note">
+                    <label class="form-label">Transaction Note</label>
+                    <input
+                      type="text"
+                      class="form-input transaction-note-input"
+                    />
+                  </div>
+
                   <p class="receiver found"></p>
 
                   <button class="submit-form-btn send-money-btn">
@@ -187,6 +206,7 @@
               </section>
               <!--send money interface-->
 
+              <!--pay bills interface-->
               <section class="form-container pay-bills-interface">
                 <form>
                   <div class="form-row">
@@ -411,7 +431,50 @@
                     Pay Bill
                   </button>
                 </form>
+                <!--pay bills interface-->
               </section>
+
+              <!--stash interface-->
+              <section class="form-container stash-interface">
+                <form>
+                  <div class="form-row stash-row">
+                    <label class="form-label">What would you like to do?</label>
+                    <input
+                      type="text"
+                      readonly
+                      class="form-input listToggler stash-action-input"
+                      data-toggler="stash-action-list"
+                      readonly
+                    />
+
+                    <span class="dropdown-list stash-action-list">
+                      <p class="list-element stash-action">
+                        <span class="list-item stash-action-name">Deposit</span>
+                      </p>
+
+                      <p class="list-element stash-action">
+                        <span class="list-item stash-action-name"
+                          >Withdrawal</span
+                        >
+                      </p>
+                      <!--dropdown list span ending-->
+                    </span>
+                  </div>
+
+                  <span class="stash-menu stash-amount-menu">
+                    <div class="form-row deposit">
+                      <label class="form-label">Amount</label>
+                      <input
+                        type="text"
+                        class="form-input stash-amount-input"
+                      />
+                    </div>
+                  </span>
+
+                  <button class="submit-form-btn stash-btn">Confirm</button>
+                </form>
+              </section>
+              <!--stash interface-->
             </div>
             <!--app main inner-->
           </div>
@@ -530,11 +593,8 @@
               </div>
 
               <div class="confirmation-row">
-                <button
-                  class="confirm-send-money-btn submit-form-btn"
-                  type="button"
-                >
-                  Send Money
+                <button class="confirm-btn submit-form-btn" type="button">
+                  Confirm
                 </button>
               </div>
               <!--confirmation row-->
@@ -551,8 +611,10 @@
               data-movements="allMovements"
               data-from="fromMovements"
               data-timeMov="timeOfTransaction"
-            ></i
-          ></a>
+              data-notes="allNotes"
+              >s</i
+            ></a
+          >
         </footer>
       </div>
       <!--app-->

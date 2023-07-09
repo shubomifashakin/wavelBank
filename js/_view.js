@@ -6,6 +6,7 @@ class Views {
   //navbar elements
   eyeIcon = document.querySelector(".icon-eye");
   userBalance = document.querySelector(".user-current-balance");
+  stashBalance = document.querySelector(".user-stash-balance");
   userName = document.querySelector(".user-name");
   userAccountNumber = document.querySelector(".user-account-number");
   userAccountType = document.querySelector(".user-account-type");
@@ -14,6 +15,7 @@ class Views {
   transactionsIcon = document.querySelector(".transactions");
   sendMoneyIcon = document.querySelector(".send-money-icon");
   payBillsIcon = document.querySelector(".pay-bills-icon");
+  stashIcon = document.querySelector(".stash-icon");
   sidebarIcons = document.querySelectorAll(".side-icon");
 
   mainElement = document.querySelector(".app-main-inner");
@@ -37,6 +39,9 @@ class Views {
     //when the user clicks the payBills icon
     this.payBillsIcon.addEventListener("click", this.showInterface.bind(this));
 
+    //when the user clicks the stash icon
+    this.stashIcon.addEventListener("click", this.showInterface.bind(this));
+
     //handling toggle clicks in the main element
     this.mainElement.addEventListener(
       "click",
@@ -51,6 +56,7 @@ class Views {
   hideAccountBalance() {
     if (this.userBalance.textContent !== "---") {
       this.userBalance.textContent = "---";
+      this.stashBalance.textContent = "---";
     } else {
       //show the users account balance
       this.userBalance.textContent = new Intl.NumberFormat("en-us", {
@@ -58,6 +64,12 @@ class Views {
         currency: "NGN",
         maximumFractionDigits: 0,
       }).format(AppState.getState[0].accountBalance);
+
+      this.stashBalance.textContent = new Intl.NumberFormat("en-us", {
+        style: "currency",
+        currency: "NGN",
+        maximumFractionDigits: 0,
+      }).format(AppState.getState[0].getStashBalance);
     }
   }
 
@@ -92,6 +104,7 @@ class Views {
 
   //this renders all users transactions
   showTransactions(e) {
+    console.log(e);
     //removes rendered transactions from the transactions element
     this.transactionsInterface.innerHTML = "";
 
@@ -104,6 +117,7 @@ class Views {
       ? this.toggleTransactions(e.target)
       : this.toggleTransactions();
 
+    //for each transaction render html on screen
     results.transactions.forEach((tra, i) => {
       const html = ` <div class="transaction debit">
         <span class="transaction-info-left">
@@ -113,7 +127,9 @@ class Views {
         </span>
 
         <span class="transaction-info-right">
-          <p class="transaction-sender-desc">Money for food</p>
+          <p class="transaction-sender-desc">DESC: ${
+            results.transactionNotes[i]
+          }</p>
           <p class="transaction-amount ${
             tra < 0 ? "debit" : "credit"
           }">${new Intl.NumberFormat("en-us", {
@@ -135,25 +151,28 @@ class Views {
       e.dataset.movements = "allCredits";
       e.dataset.from = "fromCredits";
       e.dataset.timemov = "timeOfCredits";
+      e.dataset.notes = "creditNotes";
       e.classList.remove("sort-all");
       e.classList.add("sort-credits");
     } else if (e?.classList.contains("sort-credits")) {
       e.dataset.movements = "allDebits";
       e.dataset.from = "fromDebits";
       e.dataset.timemov = "timeOfDebits";
+      e.dataset.notes = "debitNotes";
       e.classList.remove("sort-credits");
       e.classList.add("sort-debits");
     } else if (e?.classList.contains("sort-debits")) {
       e.dataset.movements = "allMovements";
       e.dataset.from = "fromMovements";
       e.dataset.timemov = "timeOfTransaction";
+      e.dataset.notes = "allNotes";
       e.classList.remove("sort-debits");
       e.classList.add("sort-all");
     }
 
-    //if the sort icon was clicked, let the transacions,fromMovements and timeMov be gotten from their respective datasets
+    //if the sort icon was clicked, let the transactions,fromMovements and timeMov be gotten from their respective datasets
 
-    //but if the user logged in, get all transactions,fromMovements and timeOfTransactions
+    //but if the user logged in or clicked the transactions icon, get all transactions,fromMovements and timeOfTransactions
     let transactions = e?.classList.contains("sort-icon")
       ? AppState.getState[0][e.dataset.movements]
       : AppState.getState[0].allMovements;
@@ -163,8 +182,10 @@ class Views {
     let timeOfMovements = e?.classList.contains("sort-icon")
       ? AppState.getState[0][e.dataset.timemov]
       : AppState.getState[0].timeOfTransaction;
-
-    return { transactions, fromMovements, timeOfMovements };
+    let transactionNotes = e?.classList.contains("sort-icon")
+      ? AppState.getState[0][e.dataset.notes]
+      : AppState.getState[0].allNotes;
+    return { transactions, fromMovements, timeOfMovements, transactionNotes };
   }
 
   //call back for handling clicks in the main element
@@ -220,6 +241,13 @@ class Views {
       AppState.getState[0].accountNumber
     } - - ${AppState.getState[0].accountType.toUpperCase()}`;
     this.userName.textContent = AppState.getState[0].lastName;
+
+    //shows the users stash Balance
+    this.stashBalance.textContent = new Intl.NumberFormat("en-us", {
+      style: "currency",
+      currency: "NGN",
+      maximumFractionDigits: 0,
+    }).format(AppState.getState[0].getStashBalance);
   }
 }
 

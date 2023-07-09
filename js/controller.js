@@ -3,6 +3,7 @@ import { userView } from "./_view.js";
 import { payBills } from "./_payBills.js";
 import { sendMoney } from "./_sendMoneyView.js";
 import { confirmationInterface } from "./_confirmationModal.js";
+import { Stash } from "./_stashView.js";
 import { logInOut } from "./_logInOut.js";
 import "core-js/stable";
 

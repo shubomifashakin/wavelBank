@@ -39,16 +39,18 @@ class ConfirmationModal {
       this.removeConfirmationModal();
       AppState.clearReceiverDetails();
     }
-    //if the confirm send button was clicked and the user has entered the correct pin
+    //if the confirm send button was clicked and the user has entered the correct pin to send money
     else if (
-      e.target.classList.contains("confirm-send-money-btn") &&
-      this.confirmationInput.value === AppState.getState[0].getPassword
+      e.target.classList.contains("confirm-btn") &&
+      this.confirmationInput.value === AppState.getState[0].getPassword &&
+      AppState.getReceiverDetails.reciverAccount[0]
     ) {
       //debit the user
       AppState.getState[0].newDebit(
         AppState.getReceiverDetails.outgoingAmount[0],
         userView.currentDate,
-        AppState.getReceiverDetails.reciverAccount[0].getFullName
+        AppState.getReceiverDetails.reciverAccount[0].getFullName,
+        AppState.getReceiverDetails.receiverNote
       );
 
       //find the receiving user and credit the user
@@ -60,7 +62,8 @@ class ConfirmationModal {
         .newCredit(
           AppState.getReceiverDetails.outgoingAmount[0],
           userView.currentDate,
-          AppState.getState[0].getFullName
+          AppState.getState[0].getFullName,
+          AppState.getReceiverDetails.receiverNote
         );
 
       //remove the confirmation modal
@@ -75,14 +78,85 @@ class ConfirmationModal {
       //update the ui
       userView.updateUI();
     }
+    // the confirm button is clicked, the user wants to save to stash, and the correct password was entered
+    else if (
+      e.target.classList.contains("confirm-btn") &&
+      this.confirmationInput.value === AppState.getState[0].getPassword &&
+      AppState.getState[0].getPendingStashCredit
+    ) {
+      //push the money into the stash
+      AppState.getState[0].getStash.push(
+        AppState.getState[0].getPendingStashCredit
+      );
+
+      //debit the user
+      AppState.getState[0].newDebit(
+        AppState.getState[0].getPendingStashCredit,
+        userView.currentDate,
+        AppState.getState[0].getFullName,
+        "Stash Deposit"
+      );
+
+      //update the ui
+      userView.updateUI();
+
+      //remove the confirmation modal
+      this.removeConfirmationModal();
+
+      //show success modal
+      this.showAndRemoveSuccessModal(
+        AppState.getState[0],
+        AppState.getState[0].getPendingStashCredit
+      );
+
+      //clear the pending stash credit
+      AppState.getState[0].setPendingStashCredit = 0;
+    }
+    //if the user wants to withdraw from stash, the confirm button is clicked and the correct password was entered
+    else if (
+      e.target.classList.contains("confirm-btn") &&
+      this.confirmationInput.value === AppState.getState[0].getPassword &&
+      AppState.getState[0].getPendingStashDebit
+    ) {
+      //push the money into the stash
+      AppState.getState[0].getStash.push(
+        AppState.getState[0].getPendingStashDebit
+      );
+
+      //credit the user
+      AppState.getState[0].newCredit(
+        -AppState.getState[0].getPendingStashDebit,
+        userView.currentDate,
+        AppState.getState[0].getFullName,
+        "Stash Withdrawal"
+      );
+
+      //update the ui
+      userView.updateUI();
+
+      //remove the confirmation modal
+      this.removeConfirmationModal();
+
+      //clear the pending stash debit
+      AppState.getState[0].setPendingStashDebit = 0;
+    }
   }
 
-  showAndRemoveSuccessModal() {
-    this.successModalAmount.textContent =
-      AppState.getReceiverDetails.outgoingAmount[0];
-    this.successModalReceiver.textContent =
-      AppState.getReceiverDetails.reciverAccount[0].getFullName;
-    this.successModal.classList.add("show-success-modal");
+  showAndRemoveSuccessModal(user, amount) {
+    //if the user sent money to another person
+    if (!user) {
+      this.successModalAmount.textContent =
+        AppState.getReceiverDetails.outgoingAmount[0];
+      this.successModalReceiver.textContent =
+        AppState.getReceiverDetails.reciverAccount[0].getFullName;
+      this.successModal.classList.add("show-success-modal");
+    }
+    //if the user sent money to his/her stash
+    else {
+      this.successModalAmount.textContent = amount;
+      this.successModalReceiver.textContent = user.getFullName;
+      this.successModal.classList.add("show-success-modal");
+    }
 
     setTimeout(
       function (successModal) {

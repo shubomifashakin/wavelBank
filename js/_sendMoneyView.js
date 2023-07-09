@@ -5,11 +5,14 @@ import { confirmationInterface } from "./_confirmationModal";
 
 class SendMoney {
   //send money interface elements
+  interfaceName = "SendMoney";
   sendMoneyInterface = document.querySelector(".send-money-interface");
   accountNumberInput = document.querySelector(".account-number-input");
   listOfBanksInput = document.querySelector(".listOfBanksInput");
   amountToSendInput = document.querySelector(".amount-to-send-input");
   amountToSendRow = document.querySelector(".amount-to-send");
+  transactionNoteRow = document.querySelector(".transaction-note");
+  transactionNoteInput = document.querySelector(".transaction-note-input");
   foundReceiver = document.querySelector(".found");
 
   constructor() {
@@ -20,6 +23,7 @@ class SendMoney {
   }
 
   sendMoneyEventHandler(e) {
+    if (this.interfaceName !== "SendMoney") return;
     //if the user clicks the send button and the bank Name and account Number are filled
     if (
       e.target.classList.contains("send-money-btn") &&
@@ -34,10 +38,13 @@ class SendMoney {
         this.accountNumberInput.value
       );
 
-      //if the receiver was found show the amount-to-send row
+      //if the receiver was found show the amount-to-send and transaction notes row
       if (typeof receiver !== "string") {
         //show the amount to send input
         this.amountToSendRow.classList.add("show-interface");
+
+        //show the transaction notes row
+        this.transactionNoteRow.classList.add("show-interface");
 
         //show the name of the receiver
         this.foundReceiver.textContent = `${receiver.firstName} ${receiver.lastName}`;
@@ -47,6 +54,9 @@ class SendMoney {
 
         //hide the amount to send row
         this.amountToSendRow.classList.remove("show-interface");
+
+        //hide the note row
+        this.transactionNoteRow.classList.remove("show-interface");
       }
     }
     //if the user clicks the send money btn and the account number entered is the same as the logged in user
@@ -57,6 +67,8 @@ class SendMoney {
       //remove the amount to send row and clear the receiver message
       this.amountToSendInput.value = "";
       this.amountToSendRow.classList.remove("show-interface");
+      //hide the note row
+      this.transactionNoteRow.classList.remove("show-interface");
       this.foundReceiver.textContent = "";
 
       //clear the sending state if there was anything stored in it
@@ -67,6 +79,7 @@ class SendMoney {
       e.target.classList.contains("send-money-btn") &&
       this.accountNumberInput.value &&
       this.amountToSendInput.value &&
+      this.transactionNoteInput.value &&
       typeof everyBank.findAccount(
         this.listOfBanksInput.value,
         this.accountNumberInput.value
@@ -75,17 +88,21 @@ class SendMoney {
       //get the amount entered in the amount input
       const amountToSend = this.amountToSendInput.value;
 
+      //get the transaction note
+      const transNote = this.transactionNoteInput.value;
+
       //receiver details
       const receiver = everyBank.findAccount(
         this.listOfBanksInput.value,
         this.accountNumberInput.value
       );
 
-      //check if the user has the money. if they do the confirmation modal is shown if they do not, an error is shown
+      //check if the user has the money. if they do the confirmation modal is shown. if they do not, an error is shown
       this.checkIfTheUserHasTheMoney(
         receiver,
         amountToSend,
-        this.showSendError.bind(this)
+        this.showSendError.bind(this),
+        transNote
       );
     }
   }
@@ -100,12 +117,14 @@ class SendMoney {
     this.foundReceiver.textContent = "";
     this.accountNumberInput.value = "";
     this.amountToSendInput.value = "";
+    this.transactionNoteInput.value = "";
     this.listOfBanksInput.value = "";
     this.amountToSendRow.classList.remove("show-interface");
+    this.transactionNoteRow.classList.remove("show-interface");
   }
 
   //checks if the user has the money to send
-  checkIfTheUserHasTheMoney(receiver, amountToSend, errorHandler) {
+  checkIfTheUserHasTheMoney(receiver, amountToSend, errorHandler, note) {
     //if the user has the money
     if (
       AppState.getState[0].accountBalance > amountToSend &&
@@ -114,6 +133,7 @@ class SendMoney {
       //store the receivers account and outgoing amount in receiver details
       AppState.getReceiverDetails.reciverAccount.push(receiver);
       AppState.getReceiverDetails.outgoingAmount.push(amountToSend);
+      AppState.getReceiverDetails.receiverNote = note;
 
       //show confirmation modal
       confirmationInterface.showConfirmationModal(receiver, amountToSend);

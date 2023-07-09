@@ -3,6 +3,7 @@ class App {
   #receiverDetails = {
     reciverAccount: [],
     outgoingAmount: [],
+    receiverNote: "",
   };
 
   get getState() {
@@ -98,6 +99,21 @@ export class account {
   #card;
   #stash = [];
 
+  #movements = {
+    transactionsInOrder: [],
+    timeOfTransactions: [],
+    timeOfDebitsOnly: [],
+    timeOfCreditsOnly: [],
+    from: [],
+    fromDebitsOnly: [],
+    fromCreditsOnly: [],
+    allTransactionNotes: [],
+    debitTransactionNotes: [],
+    creditTransactionNotes: [],
+  };
+  #pendingStashCredit;
+  #pendingStashDebit;
+
   constructor(
     username,
     firstName,
@@ -125,34 +141,50 @@ export class account {
     this.pushToBank();
   }
 
+  //returns the users full name
   get getFullName() {
     return this.firstName + " " + this.lastName;
   }
 
-  #movements = {
-    transactionsInOrder: [],
-    timeOfTransactions: [],
-    timeOfDebitsOnly: [],
-    timeOfCreditsOnly: [],
-    from: [],
-    fromDebitsOnly: [],
-    fromCreditsOnly: [],
-  };
+  //returns the stash
+  get getStash() {
+    return this.#stash;
+  }
 
-  newDebit(debit, time, from) {
+  get getPendingStashCredit() {
+    return this.#pendingStashCredit;
+  }
+
+  set setPendingStashCredit(amount) {
+    this.#pendingStashCredit = amount;
+  }
+
+  get getPendingStashDebit() {
+    return this.#pendingStashDebit;
+  }
+
+  set setPendingStashDebit(amount) {
+    this.#pendingStashDebit = amount;
+  }
+
+  newDebit(debit, time, from, note) {
     this.#movements.transactionsInOrder.push(-debit);
     this.#movements.timeOfTransactions.push(time);
     this.#movements.timeOfDebitsOnly.push(time);
     this.#movements.from.push(from);
     this.#movements.fromDebitsOnly.push(from);
+    this.#movements.allTransactionNotes.push(note);
+    this.#movements.debitTransactionNotes.push(note);
   }
 
-  newCredit(credit, time, from) {
+  newCredit(credit, time, from, note) {
     this.#movements.transactionsInOrder.push(credit);
     this.#movements.timeOfTransactions.push(time);
     this.#movements.timeOfCreditsOnly.push(time);
     this.#movements.from.push(from);
     this.#movements.fromCreditsOnly.push(from);
+    this.#movements.allTransactionNotes.push(note);
+    this.#movements.creditTransactionNotes.push(note);
   }
 
   //get password
@@ -205,9 +237,31 @@ export class account {
     return this.#movements.timeOfCreditsOnly;
   }
 
+  //get all notes
+  get allNotes() {
+    return this.#movements.allTransactionNotes;
+  }
+
+  //get all debit notes
+  get debitNotes() {
+    return this.#movements.debitTransactionNotes;
+  }
+
+  //get all credit notes
+  get creditNotes() {
+    return this.#movements.creditTransactionNotes;
+  }
+
   //returns the users account balance
   get accountBalance() {
     return this.#movements.transactionsInOrder.reduce((total, curr) => {
+      return total + Number(curr);
+    }, 0);
+  }
+
+  //returns the users stash balance
+  get getStashBalance() {
+    return this.#stash.reduce((total, curr) => {
       return total + Number(curr);
     }, 0);
   }
@@ -231,11 +285,11 @@ const ac1 = new account(
   "savings"
 );
 
-ac1.newCredit(2550, "02/03/2023", "Diana Ross");
-ac1.newDebit(8390, "20/03/2023", "Meek Mill");
-ac1.newCredit(93000, "31/03/2023", "Mac Miller");
-ac1.newCredit(530, "02/04/2023", "Kendrick Lamar");
-ac1.newDebit(4321, "09/04/2023", "Ella Mai");
+ac1.newDebit(2550, "02/03/2023", "Diana Ross", "Money for Face Lift");
+ac1.newDebit(8390, "20/03/2023", "Meek Mill", "netflix subscription");
+ac1.newCredit(93000, "31/03/2023", "Mac Miller", "Money for Drinks");
+ac1.newCredit(530, "02/04/2023", "Kendrick Lamar", "Money Borrowed for Beat");
+ac1.newDebit(4321, "09/04/2023", "Ella Mai", "Money for clothes");
 
 const ac2 = new account(
   "useruser",
@@ -249,11 +303,11 @@ const ac2 = new account(
   "2004475543",
   "savings"
 );
-ac2.newCredit(8022, "02/03/2023", "Luka Sabbat");
-ac2.newDebit(2340, "08/03/2023", "Elon Musk");
-ac2.newCredit(9300, "02/04/2023", "Jermaine Cole");
-ac2.newDebit(15400, "07/04/2023", "Temi Otedola");
-ac2.newCredit(22300, "02/04/2023", "Kendrick Lamar");
+ac2.newCredit(1022, "02/03/2023", "Luka Sabbat", "Payment for Jeans");
+ac2.newDebit(2340, "08/03/2023", "Elon Musk", "Space X Funding");
+ac2.newCredit(90300, "02/04/2023", "Jermaine Cole", "Money for Drinks");
+ac2.newDebit(15400, "07/04/2023", "Temi Otedola", "Money for Nails");
+ac2.newDebit(2300, "02/04/2023", "Kendrick Lamar", "Studio Allowance");
 
 const ac3 = new account(
   "femiote",
@@ -267,8 +321,8 @@ const ac3 = new account(
   "2122662171",
   "savings"
 );
-ac3.newCredit(8022, "02/03/2023", "Luka Sabbat");
-ac3.newDebit(2340, "08/03/2023", "Elon Musk");
-ac3.newCredit(9300, "02/04/2023", "Jermaine Cole");
-ac3.newDebit(15400, "07/04/2023", "Temi Otedola");
-ac3.newCredit(22300, "02/04/2023", "Kendrick Lamar");
+ac3.newCredit(20022, "02/03/2023", "Mark Zuckerberg", "Salary");
+ac3.newDebit(2340, "08/03/2023", "Aliko Dangote", "Money for food");
+ac3.newCredit(9300, "02/04/2023", "Peter Obi", "Money Borrowed For Election");
+ac3.newDebit(15400, "07/04/2023", "Temi Otedola", "Money for Nails");
+ac3.newDebit(2000, "02/04/2023", "Tony Elumelu", "Feeding Allowance");

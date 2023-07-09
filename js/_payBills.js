@@ -1,5 +1,6 @@
 import { userView } from "./_view";
 class PayBills {
+  interfaceName = "PayBills";
   payBillsInterface = document.querySelector(".pay-bills-interface");
   listOfBillsInput = document.querySelector(".listOfBillsInput");
   allPayBillsMenus = document.querySelectorAll(".pay-bills-menu");
@@ -16,6 +17,7 @@ class PayBills {
 
   //how the bank app handles clicks on the main element when the pay bills interface is active
   payBillsEventHandler(e) {
+    if (this.interfaceName !== "PayBills") return;
     if (this.listOfBillsInput.value === "Airtime Purchase") {
       this.clearPayBillsMenu(this.airtimePurchaseMenu);
     } else if (this.listOfBillsInput.value === "Internet Services") {
