@@ -13,7 +13,7 @@
   --login-bg-gradient: linear-gradient(
     195deg,
     rgba(239, 239, 239, 0.1),
-    rgba(89, 84, 246, 0.2)
+    rgba(10, 9, 24, 0.2)
   );
   --primary-text-color: #f4fefd;
   --secondary-text-color: #000;
@@ -683,6 +683,24 @@ input[type="number"] {
   color: var(--hover-color);
 }
 
+@media (max-width: 900px) and (max-height: 420px) {
+  .navbar {
+    padding: 1rem 1rem !important;
+  }
+}
+@media (max-width: 350px) {
+  .user-greeting,
+  .user-account-number,
+  .user-name,
+  .user-current-balance,
+  .icon-eye,
+  .user-balance,
+  .user-stash,
+  .user-stash-balance {
+    font-size: 0.7rem !important;
+  }
+}
+
 @media (max-width: 800px) {
   .log-in {
     width: 100%;
@@ -696,8 +714,9 @@ input[type="number"] {
   }
 
   .navbar {
+    flex-basis: 10% !important;
     width: 100%;
-    padding: 0rem 2rem;
+    padding: 0rem 1rem !important;
     align-items: center;
   }
 
@@ -719,6 +738,9 @@ input[type="number"] {
     padding: 1rem 1rem;
   }
 
+  .app-inner {
+    flex-basis: 80%;
+  }
   .app-main-inner {
     min-height: 100%;
     overflow-y: auto;
@@ -728,7 +750,24 @@ input[type="number"] {
     padding: 1rem;
   }
 
+  .transaction-sender-desc {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+
+  .transaction-sender-name {
+    font-size: 0.85rem;
+  }
+
+  .transaction-date {
+    font-size: 0.85rem;
+  }
+
   .form-container {
     padding: 2rem 1rem;
+  }
+
+  .app-footer {
+    flex-basis: 10% !important;
   }
 }
