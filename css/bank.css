@@ -151,7 +151,6 @@ html {
   border: none;
   background: var(--submit-btn-bg);
   padding: 0.25rem 1rem;
-  border-radius: 5px;
   color: var(--primary-text-color);
 }
 
@@ -226,7 +225,6 @@ html {
   width: 100%;
   padding: 0.75rem 0.75rem;
   box-sizing: border-box;
-  border-radius: 5px;
   border: solid 1px var(--border-color);
   background: none;
   outline: none;
@@ -296,7 +294,6 @@ html {
   );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 2px;
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.212);
   overflow-y: auto;
 }
