@@ -34,7 +34,7 @@ html {
   overflow: hidden;
 }
 .container {
-  height: 100vh;
+  height: 100svh;
   width: 100%;
   box-sizing: border-box;
   position: relative;
@@ -160,7 +160,7 @@ html {
 }
 
 .log-in {
-  height: 100vh;
+  height: 100svh;
   width: 100%;
   position: absolute;
   background: var(--login-bg-gradient);
@@ -570,7 +570,7 @@ input[type="number"] {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.212);
-  height: 100vh;
+  height: 100svh;
   width: 100%;
   position: absolute;
   z-index: 3;
